@@ -9,3 +9,6 @@ data:
   mode: "Online"
   trainer: "Siva Janardhan"
   demo_greeting: "hello from k8s configmap"
+
+  # 7 skipped 
+  
