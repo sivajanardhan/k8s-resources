@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: configMap
+metadata:
+  name: app-config
+  namespace: roboshop
+data:
+  course: "DevOps"
+  duration: "6 months"
+  mode: "Online"
+  trainer: "Siva Janardhan"
+  demo greeting: "hello from k8s configmap"
