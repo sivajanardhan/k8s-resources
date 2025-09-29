@@ -12,3 +12,11 @@ spec:
   - name: side-car-container
     image: almalinux:8
     command: ["sleep", "200"]
+
+
+
+    # kubectl exec -it <pod-name> -c <container-name> -- <command>
+    # kubectl exec -it multi-container-pod -c side-car-container -- bash
+    # kubectl exec -it multi-container-pod -c nginx-container -- bash
+
+    
