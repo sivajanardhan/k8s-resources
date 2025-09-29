@@ -4,7 +4,7 @@ metadata:
   name: envar-demo
   namespace: roboshop
 spec:
-  contqainers:
+  containers:
   - name: envar-demo-container
     image: nginx
     env:
@@ -14,4 +14,3 @@ spec:
       value: "hello from k8s environment"   
 
 
-      
