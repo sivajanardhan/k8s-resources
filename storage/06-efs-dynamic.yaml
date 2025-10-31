@@ -1,0 +1,53 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: efs-dynamic-roboshop-sc
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: fs-08dfcdced3a0e42f5   # <-- replace with your EFS ID
+  directoryPerms: "700"
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: efs-dynamic-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-dynamic-roboshop-sc
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: efs-dynamic-nginx 
+  labels: # this labels belong to deployment
+    app: efs-dynamic-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: efs-dynamic-nginx
+  template:
+    metadata:
+      labels:
+        app: efs-dynamic-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: efs-storage
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: efs-storage
+        persistentVolumeClaim:
+          claimName: efs-dynamic-pvc
+---
